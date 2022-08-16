@@ -9,13 +9,13 @@ jobs:
   build: # 마음대로 적어도됨.
     runs-on: ubuntu-18.04
     steps:
-      - name: Checkout # not need 1.action code download lib
-        uses: actions/checkout@v2 #google see ok easy code download
-      - name: Set up JDK # not need 2.action jdk download lib
-        uses: actions/setup-java@v1 #google see ok easy code download
+      - name: Checkout # not to need 1.action code download lib
+        uses: actions/checkout@v2 #google ok easy code download
+      - name: Set up JDK # not to need 2.action jdk download lib
+        uses: actions/setup-java@v1 #google ok easy code download
         with:
           java-version: 11
-      - name: Grant execute permission for gradlew # not need 3.script
+      - name: Grant execute permission for gradlew # not to need 3.script
         run: chmod +x ./gradlew # 실행권한을 bash로 줍니다.
         shell: bash 
       - name: Build with Gradle # not need 4.script
@@ -23,7 +23,7 @@ jobs:
         shell: bash
 
     # UTC가 기준이기 때문에 한국시간으로 맞추려면 +9시간 해야 한다.
-      - name: Get current time # not need time
+      - name: Get current time # not to need time
         uses: 1466587594/get-current-time@v2 
         id: current-time
         with:
@@ -44,8 +44,8 @@ jobs:
       - name: Deploy to EB
         uses: einaregilsson/beanstalk-deploy@v20
         with:
-          aws_access_key: ${{ secrets.AWS_ACCESS_KEY }}
-          aws_secret_key: ${{ secrets.AWS_SECRET_KEY }}
+          aws_access_key: ${{ secrets.AWS_ACCESS_KEY }} # 깃허브 시크릿 등록완료
+          aws_secret_key: ${{ secrets.AWS_SECRET_KEY }} # 깃허브 시크릿 등록완료
           application_name: aws-v5-beanstalk # 엘리스틱 빈스톡 애플리케이션 이름!
           environment_name: Awsv5beanstalk-env # 엘리스틱 빈스톡 환경 이름!
           version_label: aws-v5-${{steps.current-time.outputs.formattedTime}}
